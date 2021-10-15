@@ -3,7 +3,7 @@ name: Pull Request
 on:
   pull_request:
     branches: [ main ]
-    
+
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -26,6 +26,7 @@ jobs:
       - run: make test
       - run: make build
       - run: docker-compose up -d
+      - run: sleep 20s
       - run: curl --fail http://localhost:8080/api/ 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
