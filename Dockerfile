@@ -1,20 +1,13 @@
-FROM golang:1.16-alpine
-
+FROM golang:latest AS builder
+ADD . /app
 WORKDIR /app
+RUN cd cmd/geekshubs-library && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o /main .
 
-COPY go.mod ./
-COPY go.sum ./
-
-RUN go mod download
-
-COPY cmd/*.go ./
-COPY pkg/api/*.go ./
-COPY pkg/library/*.go ./
-
-RUN go build -o /devops-geekshub-ci-cd
-
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+COPY --from=builder /main ./
+RUN chmod +x ./main
+ENTRYPOINT ["./main"]
 EXPOSE 8080
-
-CMD [ "/devops-geekshub-ci-cd" ]
 
 
