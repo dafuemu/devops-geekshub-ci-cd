@@ -14,5 +14,15 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - run: echo "Lint the code"
+      - run: make lint
+      - run: echo "Running tests"
+      - run: make test
+      - run: echo "Bulding project"
+      - run: make build
+      - run: echo "start up docker-compose"
+      - run: docker-compose up -d
+      - run: echo "helth-check"
+      - run: curl --fail http://localhost:8080/api/ 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
