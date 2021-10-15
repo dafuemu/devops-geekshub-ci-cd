@@ -1,5 +1,9 @@
-name: GitHub Actions Demo
-on: [push]
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [ main ]
+    
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -18,15 +22,10 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '^1.13.1'
-      - run: echo "Lint the code"
       - run: make lint
-      - run: echo "Running tests"
       - run: make test
-      - run: echo "Bulding project"
       - run: make build
-      - run: echo "start up docker-compose"
       - run: docker-compose up -d
-      - run: echo "helth-check"
       - run: curl --fail http://localhost:8080/api/ 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
