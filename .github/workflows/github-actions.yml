@@ -14,6 +14,10 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - uses: actions/checkout@master
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '1.9.3'
       - run: echo "Lint the code"
       - run: make lint
       - run: echo "Running tests"
